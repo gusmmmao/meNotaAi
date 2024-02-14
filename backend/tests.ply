@@ -1,4 +1,4 @@
-tests:
+backend-tests:
   url: http://localhost:3000/teste
   method: GET
   headers: {}
