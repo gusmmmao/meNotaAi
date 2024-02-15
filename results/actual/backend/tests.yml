@@ -1,0 +1,17 @@
+backend-tests:  # 2/15/2024, 13:28:29:312
+  request:
+    url: http://localhost:3001
+    method: GET
+    headers: {}
+  response:  # 24 ms
+    status:
+      code: 200
+      message: OK
+    headers:
+      connection: close
+      content-length: '42'
+      content-type: text/html; charset=utf-8
+      date: Thu, 15 Feb 2024 13:28:29 GMT
+      etag: W/"2a-82WVkFfZgfz6OFOkOjuGMUR+Fso"
+      x-powered-by: Express
+    body: Servidor está disponível, só trabalhar!
