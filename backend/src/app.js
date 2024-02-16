@@ -22,14 +22,21 @@ const employee = require('../models/employee.js') // Terminar isso aqui mais tar
 const team = require('../models/team.js') // Terminar isso aqui mais tarde
 /* ------------ */
 
+/* Requests */
+// Request básico de teste
 app.get('/', (req, res) => {
     res.send('Servidor está disponível, só trabalhar!');
 });
 
-app.get('/test', (req, res) => {
-    res.send('Teste feito');
-})
+// Post
+app.post('/cadastro/equipe')
 
+
+/* -------- */
+
+
+/* Running constraints */
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
+/* ------------------- */
