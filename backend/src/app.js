@@ -29,7 +29,26 @@ app.get('/', (req, res) => {
 });
 
 // Post
-app.post('/cadastro/equipe')
+app.post('/cadastrar/equipe', async (req, res) => {
+    try {
+        await database.sync()
+        const { nome_equipe, setor } = req.body
+        await team.create({ nome_equipe, setor })
+        return res.status(201).json({ message: 'Equipe cadastrada com sucesso!' })
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+})
+app.post('/cadastrar/funcionario', async (req, res) => {
+    try {
+        await database.sync()
+        const { nome_usuario, email, cargo, atividade, id_equipe } = req.body
+        await employee.create({ nome_usuario, email, cargo, atividade, id_equipe })
+        return res.status(201).json({ message: 'Funcionário cadastrado com sucesso!' })
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+})
 
 
 /* -------- */
