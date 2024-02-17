@@ -36,6 +36,7 @@ app.post('/cadastrar/equipe', async (req, res) => {
         await team.create({ nome_equipe, setor })
         return res.status(201).json({ message: 'Equipe cadastrada com sucesso!' })
     } catch (error) {
+        console.log(error)
         return res.status(400).json(error)
     }
 })

@@ -6,7 +6,7 @@ const employee = database.define('funcionarios',
     id_funcionario:{
         type:Sequelize.INTEGER,
         primaryKey:true,
-        allowIncrement:true,
+        autoIncrement:true,
         allowNull:false
     },
     nome_usuario:{
@@ -29,4 +29,12 @@ const employee = database.define('funcionarios',
         type:Sequelize.INTEGER,
         allowNull:false
     }
-})
+},
+{
+    timestamps:false,
+    createdAt:false,
+    updatedAt:false
+}
+)
+
+module.exports = employee

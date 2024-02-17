@@ -6,7 +6,7 @@ const team = database.define('equipes',
     id_equipe:{
         type:Sequelize.INTEGER,
         primaryKey:true,
-        allowIncrement:true,
+        autoIncrement:true,
         allowNull:false
     },
     nome_equipe:{
@@ -17,4 +17,12 @@ const team = database.define('equipes',
         type:Sequelize.STRING(200),
         allowNull:false
     }
-})
+},
+    {
+        createdAt:false,
+        updatedAt:false,
+        timestamps:false
+    }
+)
+
+module.exports = team
