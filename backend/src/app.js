@@ -18,8 +18,9 @@ app.use(express.json())
 /* -------------------- */
 
 /* Tables files */
-const employee = require('../models/employee.js') // Terminar isso aqui mais tarde
-const team = require('../models/team.js') // Terminar isso aqui mais tarde
+const employee = require('../models/employee.js')
+const team = require('../models/team.js')
+const feedback = require('../models/feedback.js')
 /* ------------ */
 
 /* Requests */
@@ -50,7 +51,16 @@ app.post('/cadastrar/funcionario', async (req, res) => {
         return res.status(400).json(error)
     }
 })
-
+app.post('/avaliar/funcionario', async (req, res) => {
+    try {
+        await database.sync()
+        const { id_funcionario, valor_avaliacao, data_criacao } = req.body
+        await feedback.create({ id_funcionario, valor_avaliacao, data_criacao })
+        return res.status(201).json({ message: 'Avaliação realizada com sucesso!'})
+    } catch (error) {
+        return res.status(400).json(error)   
+    }
+})
 
 /* -------- */
 
