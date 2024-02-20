@@ -26,16 +26,28 @@ const feedback = require('../models/feedback.js')
 /* Middlewares */
 const equipe_existe = async (req, res, next) => {
     const { nome_equipe } = req.body;
-    const equipe_existente = await team.findAll({where:{
-        nome_equipe : nome_equipe
-    }})
+    let equipe_existente = await team.findAll({where:{nome_equipe : nome_equipe}})
+    /*
+    //Não faço a mínima ideia do porquê de não ter funcionado
     switch(equipe_existente){
-        case true:
-            return res.status(400).json({ error:'Já existe uma equipe com esse nome!'})
-            break
-        case false:
-            next()
-    
+        case equipe_existente.length > 0:return res.status(400).json({ error:'Já existe uma equipe com esse nome!'})
+        default:next()
+    }*/
+    if(equipe_existente.length > 0){
+        return res.status(400).json({ error:'Já existe uma equipe com esse nome!'})
+    }
+    else{
+        next()
+    }
+}
+const funcionario_existe = async (req, res, next) => {
+    const { nome_usuario } = req.body;
+    let funcionario_existente = await employee.findAll({where:{nome_usuario:nome_usuario}})
+    if(funcionario_existente.length > 0){
+        return res.status(400).json({error:'Já existe um funcionário com esse nome!'})
+    }
+    else{
+        next()
     }
 }
 /* ----------- */
@@ -58,7 +70,7 @@ app.post('/cadastrar/equipe', equipe_existe, async (req, res) => {
         return res.status(400).json(error)
     }
 })
-app.post('/cadastrar/funcionario', async (req, res) => {
+app.post('/cadastrar/funcionario', funcionario_existe, async (req, res) => {
     try {
         await database.sync()
         const { nome_usuario, email, cargo, atividade, id_equipe } = req.body
