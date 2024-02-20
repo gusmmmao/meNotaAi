@@ -23,6 +23,23 @@ const team = require('../models/team.js')
 const feedback = require('../models/feedback.js')
 /* ------------ */
 
+/* Middlewares */
+const equipe_existe = async (req, res, next) => {
+    const { nome_equipe } = req.body;
+    const equipe_existente = await team.findAll({where:{
+        nome_equipe : nome_equipe
+    }})
+    switch(equipe_existente){
+        case true:
+            return res.status(400).json({ error:'Já existe uma equipe com esse nome!'})
+            break
+        case false:
+            next()
+    
+    }
+}
+/* ----------- */
+
 /* Requests */
 // Request básico de teste
 app.get('/', (req, res) => {
@@ -30,7 +47,7 @@ app.get('/', (req, res) => {
 });
 
 // Post
-app.post('/cadastrar/equipe', async (req, res) => {
+app.post('/cadastrar/equipe', equipe_existe, async (req, res) => {
     try {
         await database.sync()
         const { nome_equipe, setor } = req.body

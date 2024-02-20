@@ -31,3 +31,4 @@ alter table funcionarios
 add constraint fk_funcionario_equipe
 foreign key funcionarios(id_equipe) references equipes(id_equipe);
 
+select * from equipes;
