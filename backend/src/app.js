@@ -2,7 +2,22 @@
 const express = require('express');
 const mysql = require('mysql2')
 const cors = require('cors')
+const http = require('http')
 /* --------------- */
+
+const server = http.createServer((req, res) => {
+    res.setHeader('Acess-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.end()
+})
+
+/* CORS */
+const corsOptions = {
+    origin: 'http://127.0.0.1',
+    optionsSucessStatus: 200
+}
+/* ---- */
 
 /* Database/Connection files */
 const database = require('./db.js')
@@ -13,8 +28,8 @@ let connection = mysql.createConnection(configuration)
 /* Server configuration */
 const app = express()
 const port = 3001
-app.use(cors())
 app.use(express.json())
+// app.use(cors())
 /* -------------------- */
 
 /* Tables files */
@@ -54,7 +69,7 @@ const funcionario_existe = async (req, res, next) => {
 
 /* Requests */
 // Request básico de teste
-app.get('/', (req, res) => {
+app.get('/', cors(), (req, res) => {
     res.send('Servidor está disponível, só trabalhar!');
 });
 
@@ -95,7 +110,7 @@ app.post('/avaliar/funcionario', async (req, res) => {
 
 
 /* Running constraints */
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
 /* ------------------- */
